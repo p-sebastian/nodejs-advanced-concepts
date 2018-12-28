@@ -1,3 +1,11 @@
+// changes threadpool size
+process.env.UV_THREADPOOL_SIZE = 2;
+
+/**
+ * for ./loop.js
+ * the threadpool tasks represent the 'pendingOperations' array
+ */
+
 const crypto = require('crypto');
 
 /**
@@ -22,7 +30,7 @@ crypto.pbkdf2('a', 'b', 100000, 512, 'sha512', () => {
 });
 
 /**
- * Since the threadpool ONLY 4 threads available, 4 proccesses 
+ * Since the threadpool ONLY 4 threads available by default, 4 processes 
  * will run concurrently but the fifth one will run after.
  * Showing the following times
  * 3: 1217
@@ -33,7 +41,7 @@ crypto.pbkdf2('a', 'b', 100000, 512, 'sha512', () => {
  * 
  * But it will also depend on the CPU, if it has hyperthreading,
  * or the amount of cores, for handling the threads concurrently
- * Still the node thread pool has 4 threads available
+ * Still the node thread pool has 4 threads available by DEFAULT
  */
 
 crypto.pbkdf2('a', 'b', 100000, 512, 'sha512', () => {
